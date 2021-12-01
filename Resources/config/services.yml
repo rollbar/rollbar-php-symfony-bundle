@@ -4,10 +4,13 @@ services:
     arguments:
       - '@service_container'
 
-  Rollbar\Monolog\Handler\RollbarHandler:
+  Monolog\Handler\RollbarHandler:
     factory: ['@Rollbar\Symfony\RollbarBundle\Factories\RollbarHandlerFactory', createRollbarHandler]
     tags:
       - { name: monolog.logger, channel: rollbar }
+
+  Rollbar\Monolog\Handler\RollbarHandler:
+    alias: Monolog\Handler\RollbarHandler
 
   Rollbar\Symfony\RollbarBundle\Payload\Generator:
     arguments:

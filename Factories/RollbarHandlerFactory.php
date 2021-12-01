@@ -3,7 +3,9 @@
 namespace Rollbar\Symfony\RollbarBundle\Factories;
 
 use Psr\Log\LogLevel;
-use Rollbar\Monolog\Handler\RollbarHandler;
+use Monolog\Handler\Handler;
+use Monolog\Handler\RollbarHandler;
+use Rollbar\Monolog\Handler\RollbarHandler as LegacyRollbarHandler;
 use Rollbar\Rollbar;
 use Rollbar\Symfony\RollbarBundle\DependencyInjection\RollbarExtension;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -52,10 +54,14 @@ class RollbarHandlerFactory
     /**
      * Create RollbarHandler
      *
-     * @return RollbarHandler
+     * @return Handler
      */
-    public function createRollbarHandler(): RollbarHandler
+    public function createRollbarHandler(): Handler
     {
+        if (! class_exists(RollbarHandler::class)) {
+            return new LegacyRollbarHandler(Rollbar::logger(), LogLevel::ERROR);
+        }
+
         return new RollbarHandler(Rollbar::logger(), LogLevel::ERROR);
     }
 }
