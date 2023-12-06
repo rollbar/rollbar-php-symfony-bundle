@@ -1,8 +1,15 @@
 services:
+  rollbar.person-provider:
+    class: Rollbar\Symfony\RollbarBundle\Service\PersonProvider
+    arguments:
+      - '@security.token_storage'
+      - '@serializer.normalizer.object'
 
   Rollbar\Symfony\RollbarBundle\Factories\RollbarHandlerFactory:
     arguments:
-      - '@service_container'
+      - '%rollbar.config%'
+      - '@serializer'
+      - '@rollbar.person-provider'
 
   Rollbar\Monolog\Handler\RollbarHandler:
     factory: ['@Rollbar\Symfony\RollbarBundle\Factories\RollbarHandlerFactory', createRollbarHandler]
