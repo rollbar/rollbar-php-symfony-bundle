@@ -82,7 +82,7 @@ class GeneratorTest extends KernelTestCase
      */
     public function testGetRequestInfo(): void
     {
-        $container = self::getContainer();
+        $container = static::$kernel->getContainer();
         $generator = $this->getGenerator();
 
         $request = $container->get('request_stack')->getCurrentRequest();
@@ -185,15 +185,11 @@ class GeneratorTest extends KernelTestCase
         $this->assertEquals($serverInfo, $payload['server']);
     }
 
-    protected static function getContainer(): ContainerInterface
-    {
-        return static::$container ?? static::$kernel->getContainer();
-    }
-
     private function getGenerator(): Generator
     {
+        $container = static::$kernel->getContainer();
         /** @var $generator Generator */
-        $generator = self::getContainer()->get('test.' . Generator::class);
+        $generator = $container->get('test.' . Generator::class);
         return $generator;
     }
 }
