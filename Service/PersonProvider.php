@@ -10,9 +10,10 @@ class PersonProvider implements PersonProviderInterface
     public function __construct(
         private TokenStorageInterface $tokenStorage,
         private NormalizerInterface $normalizer,
-    ) {}
+    ) {
+    }
 
-    public function getUserInfo(): array
+    public function getUserInfo(): array|string|int|float|bool|\ArrayObject|null
     {
         $token = $this->tokenStorage->getToken();
 
@@ -22,6 +23,6 @@ class PersonProvider implements PersonProviderInterface
             return $this->normalizer->normalize($user, 'json');
         }
 
-        return [];
+        return null;
     }
 }

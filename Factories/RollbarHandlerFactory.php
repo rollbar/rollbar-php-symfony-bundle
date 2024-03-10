@@ -9,6 +9,7 @@ use Rollbar\Symfony\RollbarBundle\Service\PersonProviderInterface;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Serializer\SerializerInterface;
 use Throwable;
+use function json_decode;
 
 class RollbarHandlerFactory
 {
@@ -25,7 +26,7 @@ class RollbarHandlerFactory
                 try {
                     $person = call_user_func([$personProvider, 'getUserInfo']);
 
-                    return \json_decode($serializer->serialize($person, 'json'), true, 512, JSON_THROW_ON_ERROR);
+                    return json_decode($serializer->serialize($person, 'json'), true, 512, JSON_THROW_ON_ERROR);
                 } catch (Throwable) {
                     // do nothing
                 }
