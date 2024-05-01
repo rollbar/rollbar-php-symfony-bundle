@@ -33,6 +33,7 @@
         "symfony/http-kernel": "^5.4|^6.2|^7.0",
         "symfony/monolog-bundle": "^3.8",
         "symfony/serializer": "^5.4|^6.2|^7.0",
+        "symfony/security-bundle": "^5.4|^6.4",
         "ext-json": "*"
     },
     "require-dev": {

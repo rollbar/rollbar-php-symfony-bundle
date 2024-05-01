@@ -2,9 +2,11 @@
 
 namespace Tests\Fixtures\App;
 
+use Exception;
 use Rollbar\Symfony\RollbarBundle\RollbarBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Bundle\MonologBundle\MonologBundle;
+use Symfony\Bundle\SecurityBundle\SecurityBundle;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
 
@@ -14,6 +16,7 @@ class AppKernel extends Kernel
     {
         return [
             new FrameworkBundle(),
+            new SecurityBundle(),
             new MonologBundle(),
             new RollbarBundle(),
         ];
@@ -25,7 +28,7 @@ class AppKernel extends Kernel
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function registerContainerConfiguration(LoaderInterface $loader): void
     {
