@@ -6,12 +6,14 @@ use Psr\Log\LogLevel;
 use Monolog\Handler\RollbarHandler;
 use Rollbar\Rollbar;
 use Rollbar\Symfony\RollbarBundle\DependencyInjection\RollbarExtension;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Kernel;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class RollbarHandlerFactory
 {
-    public function __construct(ContainerInterface $container)
+    public function __construct(ContainerInterface $container, SerializerInterface $serializer, Security|null $security=null)
     {
         $config = $container->getParameter(RollbarExtension::ALIAS . '.config');
 
@@ -22,13 +24,13 @@ class RollbarHandlerFactory
         if (!empty($config['person_fn']) && is_callable($config['person_fn'])) {
             $config['person'] = null;
         } elseif (empty($config['person'])) {
-            $config['person_fn'] = static function () use ($container) {
+            $config['person_fn'] = static function () use ($security, $serializer) {
                 try {
-                    $token = $container->get('security.token_storage')->getToken();
+                    $token = $security->getToken();
 
                     if ($token) {
                         $user = $token->getUser();
-                        $serializer = $container->get('serializer');
+
                         return \json_decode($serializer->serialize($user, 'json'), true, 512, JSON_THROW_ON_ERROR);
                     }
                 } catch (\Throwable $exception) {

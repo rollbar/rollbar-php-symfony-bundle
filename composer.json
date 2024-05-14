@@ -39,7 +39,8 @@
         "phpunit/phpunit": "^9.6|^10.1",
         "symfony/framework-bundle": "^5.4|^6.2|^7.0",
         "squizlabs/php_codesniffer": "^3.7",
-        "matthiasnoback/symfony-dependency-injection-test": "^4.3"
+        "matthiasnoback/symfony-dependency-injection-test": "^4.3",
+        "symfony/security-bundle": "^5.4|^6.2"
     },
     "scripts": {
         "test": [

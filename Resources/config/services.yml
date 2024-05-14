@@ -3,6 +3,8 @@ services:
   Rollbar\Symfony\RollbarBundle\Factories\RollbarHandlerFactory:
     arguments:
       - '@service_container'
+      - '@serializer'
+      - '@?security.helper'
 
   Rollbar\Monolog\Handler\RollbarHandler:
     factory: ['@Rollbar\Symfony\RollbarBundle\Factories\RollbarHandlerFactory', createRollbarHandler]
