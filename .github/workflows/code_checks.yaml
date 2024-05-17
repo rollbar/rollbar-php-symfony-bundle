@@ -18,6 +18,8 @@ jobs:
             stability: 'prefer-stable'
           - php: '8.2'
             stability: 'prefer-stable'
+          - php: '8.3'
+            stability: 'prefer-stable'
 
     name: PHP ${{ matrix.php }} - ${{ matrix.stability }} tests
     steps:
